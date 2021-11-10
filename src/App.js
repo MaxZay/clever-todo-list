@@ -1,9 +1,11 @@
-function App() {
-  return (
-    <div>
-      <h1>test react</h1>
-    </div>
-  );
-}
+import Login from './components/login'
+import './styles/app.css'
 
-export default App;
+export const App = () => {
+  return (
+    <div className="container">
+      <Login></Login>
+    </div>
+  )
+}
+// todo: dotenv virtualize js-cookie
