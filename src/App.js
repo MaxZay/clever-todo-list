@@ -1,12 +1,12 @@
-import Login from './components/login'
 import './styles/app.css'
-import Registration from "./components/registration";
+import {BrowserRouter} from "react-router-dom";
+import AppRouter from "./components/AppRouter";
 
 export const App = () => {
   return (
-    <div className="container">
-      <Registration />
-    </div>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   )
 }
 // todo: dotenv virtualize js-cookie
