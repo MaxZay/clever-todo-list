@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../styles/login.css'
+import '../styles/form.css'
 
 const Login = () => {
   const [login, setLogin] = useState('')
@@ -9,29 +9,28 @@ const Login = () => {
     e.preventDefault()
     setLogin('')
     setPassword('')
-    console.log(login, password)
   }
 
   return (
     <div>
-      <form className="form">
-        <h3 className="form-title">Authorization</h3>
+      <form className="form" onSubmit={submitHandler}>
+        <h3 className="form_title">Authorization</h3>
         <input
           placeholder={'Login'}
           id="login"
-          className="form-input"
+          className="form_input"
           value={login}
           onChange={(e) => setLogin(e.target.value)}
         />
         <input
           placeholder={'Password'}
           id="password"
-          className="form-input"
+          className="form_input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className={'form-submit'} onClick={submitHandler}>
-          Submit
+        <button className={'form_submit'} onClick={submitHandler}>
+          Log in
         </button>
       </form>
     </div>
