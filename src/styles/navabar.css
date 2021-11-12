@@ -1,0 +1,38 @@
+.navigation {
+  width: 100%;
+  height: 50px;
+  background-color: rgb(232,76,61);
+}
+
+.navigation_username {
+  margin: 0;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  user-select: none;
+  font-size: 20px;
+}
+
+.navigation_block {
+  float: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  height: 100%;
+  margin-right: 20px;
+}
+
+.navigation_log-out {
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  border-radius: 10px;
+  font-size: 20px;
+  color:  rgb(232,76,61);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.navigation_log-out:hover {
+  transform: scale(1.1);
+}
