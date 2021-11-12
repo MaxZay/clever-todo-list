@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../styles/form.css'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { validate } from '../utils/validation'
+import { Context } from '../App'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useHistory } from 'react-router'
 
 const Registration = () => {
+  const { firestore, user } = useContext(Context)
+
+  const [, setCurrentUser] = user
+
+  const [users] = useCollectionData(firestore.collection('users'))
+
+  const history = useHistory()
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -13,7 +24,24 @@ const Registration = () => {
     },
     validate,
     onSubmit: (values) => {
-      console.log(values)
+      if (
+        users.filter((user) => user.username === values.username).length > 0
+      ) {
+        alert('This username is already taken')
+      } else if (
+        users.filter((user) => user.email === values.email).length > 0
+      ) {
+        alert('This email is already taken')
+      } else {
+        const currentUser = {
+          username: values.username,
+          email: values.email,
+          password: values.password,
+        }
+        firestore.collection('users').add(currentUser)
+        setCurrentUser({ ...currentUser })
+        history.push('/main')
+      }
     },
   })
 
