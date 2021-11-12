@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import '../styles/form.css'
+import { Link } from 'react-router-dom'
 
 const Registration = () => {
   const [login, setLogin] = useState('')
@@ -40,6 +41,9 @@ const Registration = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className={'form_submit'}>Register</button>
+        <Link to={'/login'}>
+          <div className={'form_link'}>Log in</div>
+        </Link>
       </form>
     </div>
   )
