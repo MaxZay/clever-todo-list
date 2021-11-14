@@ -32,7 +32,7 @@ const Login = () => {
   })
 
   return (
-    <div>
+    <div className={'form-wrapper'}>
       <form className="form" onSubmit={formik.handleSubmit}>
         <h3 className="form_title">Authorization</h3>
         <div className={'form-block'}>
