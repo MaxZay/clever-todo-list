@@ -6,7 +6,7 @@ const Main = () => {
   const [dates, setDates] = useState([])
 
   const getWeekDay = (value) => {
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     return days[value]
   }
 
