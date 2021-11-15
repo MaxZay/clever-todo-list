@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import '../styles/form.css'
 import { useFormik } from 'formik'
 import { Link, useHistory } from 'react-router-dom'
-import { validate } from '../utils/validation'
+import { validation } from '../utils/validation'
 import { Context } from '../App'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
@@ -13,11 +13,30 @@ const Login = () => {
 
   const [users] = useCollectionData(firestore.collection('users'))
 
+  const validate = (values) => {
+    const errors = {}
+
+    if (
+      !users.find(
+        (user) =>
+          user.email === values.email && user.password === values.password
+      )
+    ) {
+      errors.email = 'No such user found'
+    }
+
+    Object.assign(errors, validation(values))
+
+    return errors
+  }
+
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
+    validateOnChange: false,
+    validateOnBlur: false,
     validate,
     onSubmit: (values) => {
       let currentUser = users.find(

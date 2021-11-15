@@ -1,17 +1,5 @@
-export const validate = (values) => {
+export const validation = (values) => {
   const errors = {}
-
-  if (values.hasOwnProperty('username')) {
-    if (!values.username) {
-      errors.username = 'Required'
-    } else if (
-      !/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(
-        values.username
-      )
-    ) {
-      errors.username = 'Invalid username'
-    }
-  }
 
   if (!values.email) {
     errors.email = 'Required'

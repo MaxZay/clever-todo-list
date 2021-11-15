@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import '../styles/form.css'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { validate } from '../utils/validation'
+import { validation } from '../utils/validation'
 import { Context } from '../App'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router'
+import { nanoid } from 'nanoid'
 
 const Registration = () => {
   const { firestore, user } = useContext(Context)
@@ -16,6 +17,32 @@ const Registration = () => {
 
   const history = useHistory()
 
+  const validate = (values) => {
+    let errors = {}
+
+    if (!values.username) {
+      errors.username = 'Required'
+    } else if (
+      !/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/.test(
+        values.username
+      )
+    ) {
+      errors.username = 'Invalid username'
+    } else if (
+      users.filter((user) => user.username === values.username).length > 0
+    ) {
+      errors.username = 'This username is already taken'
+    }
+
+    if (users.filter((user) => user.email === values.email).length > 0) {
+      errors.email = 'This email is already taken'
+    }
+
+    Object.assign(errors, validation(values))
+
+    return errors
+  }
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -23,25 +50,18 @@ const Registration = () => {
       password: '',
     },
     validate,
+    validateOnChange: false,
+    validateOnBlur: false,
     onSubmit: (values) => {
-      if (
-        users.filter((user) => user.username === values.username).length > 0
-      ) {
-        alert('This username is already taken')
-      } else if (
-        users.filter((user) => user.email === values.email).length > 0
-      ) {
-        alert('This email is already taken')
-      } else {
-        const currentUser = {
-          username: values.username,
-          email: values.email,
-          password: values.password,
-        }
-        firestore.collection('users').add(currentUser)
-        setCurrentUser({ ...currentUser })
-        history.push('/main')
+      const currentUser = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        id: nanoid(),
       }
+      firestore.collection('users').add(currentUser)
+      setCurrentUser({ ...currentUser })
+      history.push('/main')
     },
   })
 
