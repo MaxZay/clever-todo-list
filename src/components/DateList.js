@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Date from './Date'
 import '../styles/datelist.css'
+import { DateContext } from './Main'
 
-const DateList = (props) => {
+const DateList = () => {
+  const { dates } = useContext(DateContext)
+
   return (
     <div className={'date-list-wrapper'}>
-      {props.dates.map((obj) => (
+      {dates.map((obj) => (
         <Date
-          key={`${obj.day}${obj.date}${obj.year}`}
+          key={obj.id}
           date={obj.date}
           day={obj.day}
+          id={obj.id}
+          selected={obj.selected}
         />
       ))}
     </div>

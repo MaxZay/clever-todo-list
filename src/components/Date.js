@@ -1,32 +1,44 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../styles/date.css'
+import { DateContext } from './Main'
 
-const Date = (props) => {
+const Date = ({ selected, day, date, id }) => {
+  const { dates, setDates } = useContext(DateContext)
+
+  const clickHandler = () => {
+    let arr = [...dates]
+    arr.map((item) => {
+      if (item.id === id) {
+        item.selected = true
+      } else if (item.selected) {
+        delete item.selected
+      }
+    })
+    setDates(arr)
+  }
+
   return (
-    <div className={'date-block'}>
+    <div className={'date-block'} onClick={clickHandler}>
       <div
-        className={
-          props.selected ? 'date-block__info-selected' : 'date-block__info'
-        }
+        className={selected ? 'date-block__info-selected' : 'date-block__info'}
       >
         <p
           className={
-            props.selected ? 'date-block__text-selected' : 'date-block__text'
+            selected ? 'date-block__text-selected' : 'date-block__text'
           }
         >
-          {props.day}
+          {day}
         </p>
         <p
           className={
-            props.selected
+            selected
               ? 'date-block__text-selected'
               : 'date-block__text date-block__date'
           }
         >
-          {props.date}
+          {date}
         </p>
       </div>
-      <div>dots</div>
     </div>
   )
 }

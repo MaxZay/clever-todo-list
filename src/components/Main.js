@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import DateList from './DateList'
 import '../styles/main.css'
+import { nanoid } from 'nanoid'
+
+export const DateContext = React.createContext(null)
 
 const Main = () => {
   const [dates, setDates] = useState([])
@@ -22,16 +25,23 @@ const Main = () => {
       arr.push({
         day: getWeekDay(new Date(i).getDay()),
         date: new Date(i).getDate(),
-        year: new Date(i).getFullYear(),
+        id: nanoid(),
       })
     }
     setDates([...arr])
   }, [])
 
   return (
-    <div className={'main-wrapper'}>
-      {dates.length !== 0 && <DateList dates={dates} />}
-    </div>
+    <DateContext.Provider
+      value={{
+        dates,
+        setDates,
+      }}
+    >
+      <div className={'main-wrapper'}>
+        {dates.length !== 0 && <DateList dates={dates} setDates={setDates} />}
+      </div>
+    </DateContext.Provider>
   )
 }
 
