@@ -1,17 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../styles/form.css'
 import { useFormik } from 'formik'
 import { Link, useHistory } from 'react-router-dom'
 import { validation } from '../utils/validation'
 import { Context } from '../App'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../utils/firebase'
 
 const Login = () => {
-  const { firestore, user } = useContext(Context)
+  const { user } = useContext(Context)
   const [, setCurrentUser] = user
   const history = useHistory()
 
-  const [users] = useCollectionData(firestore.collection('users'))
+  const [users, setUsers] = useState([])
+
+  const usersCollectionRef = collection(db, 'users')
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef)
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+    getUsers()
+  }, [])
 
   const validate = (values) => {
     const errors = {}

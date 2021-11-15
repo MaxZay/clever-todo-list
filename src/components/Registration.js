@@ -1,19 +1,26 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../styles/form.css'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { validation } from '../utils/validation'
 import { Context } from '../App'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useHistory } from 'react-router'
 import { nanoid } from 'nanoid'
+import { db } from '../utils/firebase'
+import { addDoc, collection, getDocs } from 'firebase/firestore'
 
 const Registration = () => {
-  const { firestore, user } = useContext(Context)
+  const { user } = useContext(Context)
+
+  const [users, setUsers] = useState([])
 
   const [, setCurrentUser] = user
 
-  const [users] = useCollectionData(firestore.collection('users'))
+  const usersCollectionRef = collection(db, 'users')
+
+  const createUser = async (user) => {
+    await addDoc(usersCollectionRef, { ...user })
+  }
 
   const history = useHistory()
 
@@ -59,11 +66,20 @@ const Registration = () => {
         password: values.password,
         id: nanoid(),
       }
-      firestore.collection('users').add(currentUser)
-      setCurrentUser({ ...currentUser })
-      history.push('/main')
+      createUser(currentUser).then(() => {
+        setCurrentUser({ ...currentUser })
+        history.push('/main')
+      })
     },
   })
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef)
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+    getUsers()
+  }, [])
 
   return (
     <div className={'form-wrapper'}>
