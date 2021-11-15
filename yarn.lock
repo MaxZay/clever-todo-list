@@ -1400,7 +1400,7 @@
   "resolved" "https://registry.npmjs.org/@firebase/firestore-types/-/firestore-types-2.5.0.tgz"
   "version" "2.5.0"
 
-"@firebase/firestore@3.3.0":
+"@firebase/firestore@^3.3.0", "@firebase/firestore@3.3.0":
   "integrity" "sha512-QMCwmBlUUFldszKtVqIlqwjZYY0eODI2R7F9lkPxiANw8F853bSyBY6wqN85657vfDS7Ij6i6s+1qWMCqFvHHA=="
   "resolved" "https://registry.npmjs.org/@firebase/firestore/-/firestore-3.3.0.tgz"
   "version" "3.3.0"

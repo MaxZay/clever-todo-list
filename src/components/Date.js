@@ -3,12 +3,13 @@ import '../styles/date.css'
 import { DateContext } from './Main'
 
 const Date = ({ selected, day, date, id }) => {
-  const { dates, setDates } = useContext(DateContext)
+  const { dates, setDates, setSelectedDate } = useContext(DateContext)
 
   const clickHandler = () => {
     let arr = [...dates]
     arr.map((item) => {
       if (item.id === id) {
+        setSelectedDate({ ...item })
         item.selected = true
       } else if (item.selected) {
         delete item.selected

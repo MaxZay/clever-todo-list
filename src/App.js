@@ -1,7 +1,7 @@
 import './styles/app.css'
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './components/AppRouter'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useState } from 'react'
 
 export const Context = createContext(null)
 
