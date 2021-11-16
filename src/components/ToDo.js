@@ -29,7 +29,8 @@ const ToDo = () => {
       setTasks([...result])
     }
     getTasks()
-  }, [tasks])
+
+  }, [])
 
   return (
     <TaskContext.Provider value={{
@@ -37,8 +38,8 @@ const ToDo = () => {
       setTasks
     }}>
       <div className={'todo'}>
-        <TodoList />
-        <CreateTask />
+          <TodoList />
+          <CreateTask />
       </div>
     </TaskContext.Provider>
   )

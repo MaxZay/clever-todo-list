@@ -5,9 +5,12 @@ import { DateContext } from './Main'
 import { nanoid } from 'nanoid'
 import { addDoc, collection } from 'firebase/firestore'
 import { db } from '../utils/firebase'
+import {TaskContext} from "./ToDo";
 
 const CreateTask = () => {
   const { user } = useContext(Context)
+
+  const {tasks, setTasks} = useContext(TaskContext)
 
   const { selectedDate } = useContext(DateContext)
 
@@ -26,9 +29,10 @@ const CreateTask = () => {
       day: selectedDate.day,
       year: selectedDate.year,
       task: '',
-      taskId: nanoid(),
+      status: 'in progress',
     }
     createTask(sendObject)
+    setTasks([...tasks, sendObject])
   }
 
   return (

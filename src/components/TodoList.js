@@ -5,7 +5,7 @@ import '../styles/todoList.css'
 import {TaskContext} from "./ToDo";
 
 const TodoList = () => {
-  const {tasks, setTasks} = useContext(TaskContext)
+  const {tasks} = useContext(TaskContext)
 
   const { selectedDate } = useContext(DateContext)
 
@@ -14,7 +14,7 @@ const TodoList = () => {
       {tasks &&
         tasks.filter((item) => item.day === selectedDate.day
           && item.date === selectedDate.date
-          && item.year === selectedDate.year).map((item) => <TodoTask key={item.id} task={item.task} />)}
+          && item.year === selectedDate.year).map((item) => <TodoTask key={item.id} task={item.task} id={item.id} />)}
     </div>
   )
 }
