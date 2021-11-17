@@ -48,6 +48,10 @@
   color: rgb(232,76,61);
 }
 
+body.dark .date-block__info:hover .date-block__text {
+  color: white;
+}
+
 .date-block__info-selected {
   border: black 3px solid;
   background-color: black;
@@ -72,6 +76,11 @@
   transition: 0.2s;
 }
 
+body.dark .date-block__info-selected {
+  border: rgb(234,234,234) 3px solid;
+  background-color: rgb(88,88,88);
+}
+
 .dots__wrapper {
   display: flex;
   justify-content: center;
@@ -87,6 +96,10 @@
 
 .dot__dark {
   background-color: black;
+}
+
+body.dark .dot__dark {
+  background-color: rgb(87, 87, 87) ;
 }
 
 .dot__light {

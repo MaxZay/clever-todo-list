@@ -85,3 +85,24 @@
   color: red;
   user-select: none;
 }
+
+body.dark .form {
+  background-color: rgb(50,50,50);
+  border: 2px solid rgb(50,50,50);
+}
+
+body.dark .form_title {
+  color: rgb(234,234,234);
+}
+
+body.dark .form_link {
+  color: rgb(234,234,234);
+}
+
+body.dark .form_submit {
+  background-color: rgb(88,88,88);
+}
+
+body.dark .form_submit:hover {
+  background-color: rgb(122, 122, 122);
+}

@@ -8,7 +8,7 @@ import { db } from '../utils/firebase'
 const CreateTask = () => {
   const { user } = useContext(Context)
 
-  const { selectedDate } = useContext(MainContext)
+  const { setTasks, selectedDate } = useContext(MainContext)
 
   const tasksCollectionRef = collection(db, 'todo')
 
@@ -26,7 +26,8 @@ const CreateTask = () => {
     })
     result.sort((a, b) => {
       return new Date(a.time) - new Date(b.time)
-    })([...result])
+    })
+    setTasks([...result])
   }
 
   const [currentUser] = user
@@ -45,8 +46,6 @@ const CreateTask = () => {
     createTask(sendObject)
     getTasks()
   }
-
-  console.log('rerender')
 
   return (
     <button className={'create-task-button'} onClick={clickHandler}>

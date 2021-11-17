@@ -20,4 +20,5 @@
 body.dark .create-task-button {
   background-color: rgb(88,88,88);
   color: rgb(234,234,234);
+  margin-bottom: 10px;
 }

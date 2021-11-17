@@ -45,3 +45,8 @@
 .todo-task__icon:hover {
   transform: scale(1.2);
 }
+
+body.dark .todo-task__text{
+  background-color: transparent;
+  color: rgb(234,234,234);
+}

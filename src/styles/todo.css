@@ -3,6 +3,12 @@
   height: auto;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   gap: 20px;
+}
+
+body.dark .todo {
+  background-color: rgb(50,50,50);
+  border-radius: 10px;
 }
