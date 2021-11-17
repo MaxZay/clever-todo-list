@@ -21,6 +21,12 @@ const Main = () => {
   // const updateSelectedDate = (selectedDate) =>
   //   setData((prevState) => ({ ...prevState, selectedDate }))
 
+  // const [test, setTest] = useState({
+  //   datesTest: [],
+  //   selectedDateTest: {},
+  //   tasksTest: [],
+  // })
+
   const [dates, setDates] = useState([])
 
   const [selectedDate, setSelectedDate] = useState({})

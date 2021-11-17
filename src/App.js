@@ -8,7 +8,7 @@ export const Context = createContext(null)
 export const App = () => {
   const [user, setUser] = useState({})
 
-  const [darkMode] = useState(true)
+  const [darkMode] = useState(false)
 
   useEffect(() => {
     darkMode && (document.body.className = 'dark')
