@@ -3,6 +3,7 @@ import DateList from './DateList'
 import '../styles/main.css'
 import { nanoid } from 'nanoid'
 import ToDo from './ToDo'
+import { getWeekDay } from '../utils/getWeekDay'
 
 export const DateContext = React.createContext(null)
 
@@ -10,11 +11,6 @@ const Main = () => {
   const [dates, setDates] = useState([])
 
   const [selectedDate, setSelectedDate] = useState({})
-
-  const getWeekDay = (value) => {
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    return days[value]
-  }
 
   useEffect(() => {
     let date = new Date(Date.now())
@@ -29,6 +25,7 @@ const Main = () => {
         day: getWeekDay(new Date(i).getDay()),
         date: new Date(i).getDate(),
         year: new Date(i).getFullYear(),
+        month: new Date(i).getMonth(),
         id: nanoid(),
       })
     }

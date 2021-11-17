@@ -17,7 +17,8 @@ const TodoList = () => {
             (item) =>
               item.day === selectedDate.day &&
               item.date === selectedDate.date &&
-              item.year === selectedDate.year
+              item.year === selectedDate.year &&
+              item.month === selectedDate.month
           )
           .map((item) => (
             <TodoTask

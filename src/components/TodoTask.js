@@ -33,8 +33,8 @@ const TodoTask = ({ task, id, status }) => {
     const newTask = tasks.find((elem) => elem.id === id)
     if (newTask) {
       newTask.task = currentTask
+      await updateDoc(taskDoc, newTask)
     }
-    await updateDoc(taskDoc, newTask)
   }
 
   const removeHandler = async () => {
@@ -43,7 +43,16 @@ const TodoTask = ({ task, id, status }) => {
     setTasks([...newArr])
   }
 
-  const checkHandler = async () => {
+  const updateTask = async (newTask) => {
+    await updateDoc(taskDoc, newTask)
+  }
+
+  const checkHandler = (event) => {
+    const newTask = tasks.find((elem) => elem.id === id)
+    if (newTask) {
+      newTask.status = event.target.checked ? 'done' : 'in progress'
+      updateTask(newTask)
+    }
     setChecked(!checked)
   }
 

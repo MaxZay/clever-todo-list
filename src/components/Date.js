@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import '../styles/date.css'
 import { DateContext } from './Main'
 
-const Date = ({ selected, day, date, id }) => {
+const DateComponent = ({ selected, day, date, id }) => {
   const { dates, setDates, setSelectedDate } = useContext(DateContext)
 
   const clickHandler = () => {
@@ -14,6 +14,7 @@ const Date = ({ selected, day, date, id }) => {
       } else if (item.selected) {
         delete item.selected
       }
+      return item
     })
     setDates(arr)
   }
@@ -44,4 +45,4 @@ const Date = ({ selected, day, date, id }) => {
   )
 }
 
-export default Date
+export default DateComponent

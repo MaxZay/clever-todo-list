@@ -26,6 +26,7 @@ const CreateTask = () => {
       userId: currentUser.id,
       date: selectedDate.date,
       day: selectedDate.day,
+      month: selectedDate.month,
       year: selectedDate.year,
       task: '',
       status: 'in progress',

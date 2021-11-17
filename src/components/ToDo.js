@@ -1,10 +1,10 @@
-import React, {createContext, useContext, useEffect, useState} from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import '../styles/todo.css'
 import TodoList from './TodoList'
 import CreateTask from './CreateTask'
-import {collection, getDocs} from "firebase/firestore";
-import {db} from "../utils/firebase";
-import {Context} from "../App";
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../utils/firebase'
+import { Context } from '../App'
 
 export const TaskContext = createContext(null)
 
@@ -29,17 +29,18 @@ const ToDo = () => {
       setTasks([...result])
     }
     getTasks()
-
   }, [])
 
   return (
-    <TaskContext.Provider value={{
-      tasks,
-      setTasks
-    }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        setTasks,
+      }}
+    >
       <div className={'todo'}>
-          <TodoList />
-          <CreateTask />
+        <TodoList />
+        <CreateTask />
       </div>
     </TaskContext.Provider>
   )
