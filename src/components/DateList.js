@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid'
 import { getWeekDay } from '../utils/getWeekDay'
 
 const DateList = () => {
-  const { dates, setDates } = useContext(MainContext)
+  const { dates, setDates, tasks } = useContext(MainContext)
 
   const [currentMonth, setCurrentMonth] = useState(1)
 
@@ -46,6 +46,26 @@ const DateList = () => {
           day={obj.day}
           id={obj.id}
           selected={obj.selected}
+          dark={
+            tasks.filter(
+              (item) =>
+                item.year === obj.year &&
+                item.date === obj.date &&
+                item.month === obj.month &&
+                item.day === obj.day &&
+                item.status === 'in progress'
+            ).length > 0
+          }
+          light={
+            tasks.filter(
+              (item) =>
+                item.year === obj.year &&
+                item.date === obj.date &&
+                item.month === obj.month &&
+                item.day === obj.day &&
+                item.status === 'done'
+            ).length > 0
+          }
         />
       ))}
     </div>

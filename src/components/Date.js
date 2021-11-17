@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import '../styles/date.css'
 import { MainContext } from './Main'
 
-const DateComponent = ({ selected, day, date, id }) => {
+const DateComponent = ({ selected, day, date, id, dark, light }) => {
   const { dates, setDates, setSelectedDate } = useContext(MainContext)
 
   const clickHandler = () => {
@@ -20,26 +20,34 @@ const DateComponent = ({ selected, day, date, id }) => {
   }
 
   return (
-    <div className={'date-block'} onClick={clickHandler}>
-      <div
-        className={selected ? 'date-block__info-selected' : 'date-block__info'}
-      >
-        <p
+    <div className={'date__wrapper'}>
+      <div className={'date-block'} onClick={clickHandler}>
+        <div
           className={
-            selected ? 'date-block__text-selected' : 'date-block__text'
+            selected ? 'date-block__info-selected' : 'date-block__info'
           }
         >
-          {day}
-        </p>
-        <p
-          className={
-            selected
-              ? 'date-block__text-selected'
-              : 'date-block__text date-block__date'
-          }
-        >
-          {date}
-        </p>
+          <p
+            className={
+              selected ? 'date-block__text-selected' : 'date-block__text'
+            }
+          >
+            {day}
+          </p>
+          <p
+            className={
+              selected
+                ? 'date-block__text-selected'
+                : 'date-block__text date-block__date'
+            }
+          >
+            {date}
+          </p>
+        </div>
+      </div>
+      <div className={'dots__wrapper'}>
+        {dark && <div className={'dot dot__dark '}></div>}
+        {light && <div className={'dot dot__light'}></div>}
       </div>
     </div>
   )

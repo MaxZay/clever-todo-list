@@ -2,12 +2,23 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import '../styles/todoTask.css'
 import cross from '../assets/cross.png'
 import edit from '../assets/edit.png'
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from 'firebase/firestore'
 import { db } from '../utils/firebase'
 import { MainContext } from './Main'
+import { Context } from '../App'
 
 const TodoTask = ({ task, id, status }) => {
   const { tasks, setTasks } = useContext(MainContext)
+
+  const { user } = useContext(Context)
+
+  const [currentUser] = user
 
   const taskDoc = doc(db, 'todo', id)
 
@@ -18,6 +29,8 @@ const TodoTask = ({ task, id, status }) => {
   const [checked, setChecked] = useState(status === 'done')
 
   const inputEl = useRef(null)
+
+  const tasksCollectionRef = collection(db, 'todo')
 
   const changeHandler = (event) => {
     setCurrentTask(event.target.value)
@@ -47,11 +60,26 @@ const TodoTask = ({ task, id, status }) => {
     await updateDoc(taskDoc, newTask)
   }
 
+  const getTasks = async () => {
+    const data = await getDocs(tasksCollectionRef)
+    let result = []
+    data.docs.forEach((item) => {
+      if (item.data().userId === currentUser.id) {
+        result.push({ ...item.data(), id: item.id })
+      }
+    })
+    result.sort((a, b) => {
+      return new Date(a.time) - new Date(b.time)
+    })
+    setTasks([...result])
+  }
+
   const checkHandler = (event) => {
     const newTask = tasks.find((elem) => elem.id === id)
     if (newTask) {
       newTask.status = event.target.checked ? 'done' : 'in progress'
       updateTask(newTask)
+      getTasks()
     }
     setChecked(!checked)
   }
