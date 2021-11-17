@@ -1,13 +1,10 @@
 import React, { useContext } from 'react'
 import TodoTask from './TodoTask'
-import { DateContext } from './Main'
+import { MainContext } from './Main'
 import '../styles/todoList.css'
-import { TaskContext } from './ToDo'
 
 const TodoList = () => {
-  const { tasks } = useContext(TaskContext)
-
-  const { selectedDate } = useContext(DateContext)
+  const { tasks, selectedDate } = useContext(MainContext)
 
   return (
     <div className={'todo-list__wrapper'}>

@@ -1,17 +1,14 @@
 import React, { useContext } from 'react'
 import '../styles/createTask.css'
 import { Context } from '../App'
-import { DateContext } from './Main'
+import { MainContext } from './Main'
 import { addDoc, collection, getDocs } from 'firebase/firestore'
 import { db } from '../utils/firebase'
-import { TaskContext } from './ToDo'
 
 const CreateTask = () => {
   const { user } = useContext(Context)
 
-  const { setTasks } = useContext(TaskContext)
-
-  const { selectedDate } = useContext(DateContext)
+  const { setTasks, selectedDate } = useContext(MainContext)
 
   const tasksCollectionRef = collection(db, 'todo')
 
@@ -27,6 +24,9 @@ const CreateTask = () => {
         result.push({ ...item.data(), id: item.id })
       }
     })
+    result.sort((a, b) => {
+      return new Date(a.time) - new Date(b.time)
+    })
     setTasks([...result])
   }
 
@@ -41,6 +41,7 @@ const CreateTask = () => {
       year: selectedDate.year,
       task: '',
       status: 'in progress',
+      time: Date.now(),
     }
     createTask(sendObject)
     getTasks()

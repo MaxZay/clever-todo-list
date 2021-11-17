@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DateList from './DateList'
 import '../styles/main.css'
 import { nanoid } from 'nanoid'
 import ToDo from './ToDo'
 import { getWeekDay } from '../utils/getWeekDay'
+import { collection, getDocs } from 'firebase/firestore'
+import { db } from '../utils/firebase'
+import { Context } from '../App'
 
-export const DateContext = React.createContext(null)
+export const MainContext = React.createContext(null)
 
 const Main = () => {
   const [dates, setDates] = useState([])
 
   const [selectedDate, setSelectedDate] = useState({})
+
+  const [tasks, setTasks] = useState([])
+
+  const tasksCollectionRef = collection(db, 'todo')
+
+  const { user } = useContext(Context)
+
+  const [currentUser] = user
 
   useEffect(() => {
     let date = new Date(Date.now())
@@ -32,22 +43,39 @@ const Main = () => {
     setSelectedDate(arr[0])
     arr[0].selected = true
     setDates([...arr])
+
+    const getTasks = async () => {
+      const data = await getDocs(tasksCollectionRef)
+      let result = []
+      data.docs.forEach((item) => {
+        if (item.data().userId === currentUser.id) {
+          result.push({ ...item.data(), id: item.id })
+        }
+      })
+      result.sort((a, b) => {
+        return new Date(a.time) - new Date(b.time)
+      })
+      setTasks([...result])
+    }
+    getTasks()
   }, [])
 
   return (
-    <DateContext.Provider
+    <MainContext.Provider
       value={{
         dates,
         setDates,
         selectedDate,
         setSelectedDate,
+        tasks,
+        setTasks,
       }}
     >
       <div className={'main-wrapper'}>
         {dates.length !== 0 && <DateList dates={dates} setDates={setDates} />}
         <ToDo />
       </div>
-    </DateContext.Provider>
+    </MainContext.Provider>
   )
 }
 

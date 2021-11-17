@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import '../styles/todoTask.css'
 import cross from '../assets/cross.png'
 import edit from '../assets/edit.png'
-import { TaskContext } from './ToDo'
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { db } from '../utils/firebase'
+import { MainContext } from './Main'
 
 const TodoTask = ({ task, id, status }) => {
-  const { tasks, setTasks } = useContext(TaskContext)
+  const { tasks, setTasks } = useContext(MainContext)
 
   const taskDoc = doc(db, 'todo', id)
 

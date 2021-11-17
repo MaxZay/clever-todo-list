@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
 import DateComponent from './Date'
 import '../styles/datelist.css'
-import { DateContext } from './Main'
+import { MainContext } from './Main'
 import { nanoid } from 'nanoid'
 import { getWeekDay } from '../utils/getWeekDay'
 
 const DateList = () => {
-  const { dates, setDates } = useContext(DateContext)
+  const { dates, setDates } = useContext(MainContext)
 
   const [currentMonth, setCurrentMonth] = useState(1)
 

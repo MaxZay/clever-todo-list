@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import '../styles/date.css'
-import { DateContext } from './Main'
+import { MainContext } from './Main'
 
 const DateComponent = ({ selected, day, date, id }) => {
-  const { dates, setDates, setSelectedDate } = useContext(DateContext)
+  const { dates, setDates, setSelectedDate } = useContext(MainContext)
 
   const clickHandler = () => {
     let arr = [...dates]
