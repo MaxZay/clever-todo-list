@@ -19,6 +19,7 @@ const ToDo = () => {
 
   useEffect(() => {
     const getTasks = async () => {
+      console.log('test')
       const data = await getDocs(tasksCollectionRef)
       let result = []
       data.docs.forEach((item) => {

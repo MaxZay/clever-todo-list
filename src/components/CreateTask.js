@@ -2,21 +2,32 @@ import React, { useContext } from 'react'
 import '../styles/createTask.css'
 import { Context } from '../App'
 import { DateContext } from './Main'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, getDocs } from 'firebase/firestore'
 import { db } from '../utils/firebase'
 import { TaskContext } from './ToDo'
 
 const CreateTask = () => {
   const { user } = useContext(Context)
 
-  const { tasks, setTasks } = useContext(TaskContext)
+  const { setTasks } = useContext(TaskContext)
 
   const { selectedDate } = useContext(DateContext)
 
   const tasksCollectionRef = collection(db, 'todo')
 
   const createTask = async (object) => {
-    await addDoc(tasksCollectionRef, { ...object, id: tasksCollectionRef.id })
+    await addDoc(tasksCollectionRef, { ...object })
+  }
+
+  const getTasks = async () => {
+    const data = await getDocs(tasksCollectionRef)
+    let result = []
+    data.docs.forEach((item) => {
+      if (item.data().userId === currentUser.id) {
+        result.push({ ...item.data(), id: item.id })
+      }
+    })
+    setTasks([...result])
   }
 
   const [currentUser] = user
@@ -30,10 +41,9 @@ const CreateTask = () => {
       year: selectedDate.year,
       task: '',
       status: 'in progress',
-      id: tasksCollectionRef.id,
     }
     createTask(sendObject)
-    setTasks([...tasks, sendObject])
+    getTasks()
   }
 
   return (

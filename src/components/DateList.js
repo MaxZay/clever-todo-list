@@ -37,8 +37,6 @@ const DateList = () => {
     }
   }
 
-  console.log(dates)
-
   return (
     <div className={'date-list-wrapper'} onScroll={scrollHandler}>
       {dates.map((obj) => (
