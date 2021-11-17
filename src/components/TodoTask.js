@@ -1,44 +1,72 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import '../styles/todoTask.css'
 import cross from '../assets/cross.png'
 import edit from '../assets/edit.png'
-import {TaskContext} from "./ToDo";
-import { deleteDoc, doc } from '@firebase/firestore';
-import { db } from '../utils/firebase';
+import { TaskContext } from './ToDo'
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { db } from '../utils/firebase'
 
-const TodoTask = ({ task, id }) => {
-  const {tasks, setTasks} = useContext(TaskContext)
+const TodoTask = ({ task, id, status }) => {
+  const { tasks, setTasks } = useContext(TaskContext)
+
+  const taskDoc = doc(db, 'todo', id)
 
   const [change, setChange] = useState(false)
 
   const [currentTask, setCurrentTask] = useState(task)
+
+  const [checked, setChecked] = useState(status === 'done')
+
+  const inputEl = useRef(null)
 
   const changeHandler = (event) => {
     setCurrentTask(event.target.value)
   }
 
   const clickHandler = () => {
-    setChange(change ? false : true)
+    setChange(!change)
   }
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault()
-    setChange(change ? false : true)
+    setChange(!change)
+    const newTask = tasks.find((elem) => elem.id === id)
+    if (newTask) {
+      newTask.task = currentTask
+    }
+    await updateDoc(taskDoc, newTask)
   }
 
   const removeHandler = async () => {
-    const taskDoc = doc(db, 'todo', id)
     await deleteDoc(taskDoc)
     const newArr = tasks.filter((item) => item.id !== id)
     setTasks([...newArr])
   }
 
+  const checkHandler = async () => {
+    setChecked(!checked)
+  }
+
+  useEffect(() => {
+    if (change) inputEl.current.focus()
+  }, [change])
+
   return (
     <div className={'todo-task__wrapper'}>
-      <input className={'todo-task__checkbox'} type={'checkbox'} />
+      <input
+        className={'todo-task__checkbox'}
+        type={'checkbox'}
+        checked={checked}
+        onChange={checkHandler}
+      />
       <form className={'todo-task__form'} onSubmit={submitHandler}>
         <input
-          className={'todo-task__text'}
+          ref={inputEl}
+          className={
+            checked
+              ? 'todo-task__text-checked todo-task__text'
+              : 'todo-task__text'
+          }
           onChange={changeHandler}
           value={currentTask}
           disabled={!change}
