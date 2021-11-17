@@ -11,6 +11,16 @@ import { Context } from '../App'
 export const MainContext = React.createContext(null)
 
 const Main = () => {
+  // const [data, setData] = useState({
+  //   dates: [],
+  //   selectedDate: {},
+  // })
+  //
+  // setData({ ...data, selectedDate }) // setData(data => date + 1)
+  //
+  // const updateSelectedDate = (selectedDate) =>
+  //   setData((prevState) => ({ ...prevState, selectedDate }))
+
   const [dates, setDates] = useState([])
 
   const [selectedDate, setSelectedDate] = useState({})

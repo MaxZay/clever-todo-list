@@ -8,6 +8,10 @@ body {
   height: 100vh;
 }
 
+body.dark {
+  background-color: black;
+}
+
 #root {
   height: 100%;
   display: flex;

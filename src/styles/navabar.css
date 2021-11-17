@@ -36,3 +36,15 @@
 .navigation_log-out:hover {
   transform: scale(1.1);
 }
+
+body.dark .navigation {
+  background-color: rgb(50,50,50);
+}
+
+body.dark .navigation_username {
+  color: rgb(234,234,234);
+}
+
+body.dark .navigation_log-out {
+  color: rgb(88,88,88);
+}

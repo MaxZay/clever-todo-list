@@ -93,5 +93,17 @@
   background-color: rgb(232,76,61);
 }
 
+body.dark .date-block__date {
+  color: rgb(234,234,234);
+}
+
+body.dark .date-block__info:hover {
+  border: rgb(87, 87, 87) 3px solid;
+}
+
+body.dark .date-block__text {
+  color: gray;
+}
+
 
 
