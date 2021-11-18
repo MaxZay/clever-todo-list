@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid'
 import { getWeekDay } from '../utils/getWeekDay'
 
 const DateList = () => {
-  const { dates, setDates, tasks } = useContext(MainContext)
+  const { data, setData } = useContext(MainContext)
 
   const [currentMonth, setCurrentMonth] = useState(1)
 
@@ -32,14 +32,15 @@ const DateList = () => {
           id: nanoid(),
         })
       }
-      setDates(dates.concat(arr))
+
+      setData((data) => ({...data, dates: data.dates.concat(arr)}))
       setCurrentMonth(currentMonth + 1)
     }
   }
 
   return (
     <div className={'date-list-wrapper'} onScroll={scrollHandler}>
-      {dates.map((obj) => (
+      {data.dates.map((obj) => (
         <DateComponent
           key={obj.id}
           date={obj.date}
@@ -47,7 +48,7 @@ const DateList = () => {
           id={obj.id}
           selected={obj.selected}
           dark={
-            tasks.filter(
+            data.tasks.filter(
               (item) =>
                 item.year === obj.year &&
                 item.date === obj.date &&
@@ -57,7 +58,7 @@ const DateList = () => {
             ).length > 0
           }
           light={
-            tasks.filter(
+            data.tasks.filter(
               (item) =>
                 item.year === obj.year &&
                 item.date === obj.date &&

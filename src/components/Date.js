@@ -3,20 +3,20 @@ import '../styles/date.css'
 import { MainContext } from './Main'
 
 const DateComponent = ({ selected, day, date, id, dark, light }) => {
-  const { dates, setDates, setSelectedDate } = useContext(MainContext)
+  const { data, setData } = useContext(MainContext)
 
   const clickHandler = () => {
-    let arr = [...dates]
+    let arr = [...data.dates]
     arr.map((item) => {
       if (item.id === id) {
-        setSelectedDate({ ...item })
         item.selected = true
+        setData((data) => ({...data, selectedDate: {...item}}))
       } else if (item.selected) {
         delete item.selected
       }
       return item
     })
-    setDates(arr)
+    setData((data) => ({...data, setData: [...arr]}))
   }
 
   return (

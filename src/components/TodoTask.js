@@ -14,7 +14,7 @@ import { MainContext } from './Main'
 import { Context } from '../App'
 
 const TodoTask = ({ task, id, status }) => {
-  const { tasks, setTasks } = useContext(MainContext)
+  const { data, setData } = useContext(MainContext)
 
   const { user } = useContext(Context)
 
@@ -43,7 +43,7 @@ const TodoTask = ({ task, id, status }) => {
   const submitHandler = async (event) => {
     event.preventDefault()
     setChange(!change)
-    const newTask = tasks.find((elem) => elem.id === id)
+    const newTask = data.tasks.find((elem) => elem.id === id)
     if (newTask) {
       newTask.task = currentTask
       await updateDoc(taskDoc, newTask)
@@ -52,8 +52,8 @@ const TodoTask = ({ task, id, status }) => {
 
   const removeHandler = async () => {
     await deleteDoc(taskDoc)
-    const newArr = tasks.filter((item) => item.id !== id)
-    setTasks([...newArr])
+    const newArr = data.tasks.filter((item) => item.id !== id)
+    setData((data) => ({...data, tasks: [...newArr]}))
   }
 
   const updateTask = async (newTask) => {
@@ -71,11 +71,11 @@ const TodoTask = ({ task, id, status }) => {
     result.sort((a, b) => {
       return new Date(a.time) - new Date(b.time)
     })
-    setTasks([...result])
+    setData((data) => ({...data, tasks: [...result]}))
   }
 
   const checkHandler = (event) => {
-    const newTask = tasks.find((elem) => elem.id === id)
+    const newTask = data.tasks.find((elem) => elem.id === id)
     if (newTask) {
       newTask.status = event.target.checked ? 'done' : 'in progress'
       updateTask(newTask)

@@ -4,18 +4,18 @@ import { MainContext } from './Main'
 import '../styles/todoList.css'
 
 const TodoList = () => {
-  const { tasks, selectedDate } = useContext(MainContext)
+  const { data } = useContext(MainContext)
 
   return (
     <div className={'todo-list__wrapper'}>
-      {tasks &&
-        tasks
+      {data.tasks &&
+        data.tasks
           .filter(
             (item) =>
-              item.day === selectedDate.day &&
-              item.date === selectedDate.date &&
-              item.year === selectedDate.year &&
-              item.month === selectedDate.month
+              item.day === data.selectedDate.day &&
+              item.date === data.selectedDate.date &&
+              item.year === data.selectedDate.year &&
+              item.month === data.selectedDate.month
           )
           .map((item) => (
             <TodoTask

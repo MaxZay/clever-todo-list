@@ -11,27 +11,11 @@ import { Context } from '../App'
 export const MainContext = React.createContext(null)
 
 const Main = () => {
-  // const [data, setData] = useState({
-  //   dates: [],
-  //   selectedDate: {},
-  // })
-  //
-  // setData({ ...data, selectedDate }) // setData(data => date + 1)
-  //
-  // const updateSelectedDate = (selectedDate) =>
-  //   setData((prevState) => ({ ...prevState, selectedDate }))
-
-  // const [test, setTest] = useState({
-  //   datesTest: [],
-  //   selectedDateTest: {},
-  //   tasksTest: [],
-  // })
-
-  const [dates, setDates] = useState([])
-
-  const [selectedDate, setSelectedDate] = useState({})
-
-  const [tasks, setTasks] = useState([])
+  const [data, setData] = useState({
+    dates: [],
+    selectedDate: {},
+    tasks: []
+  })
 
   const tasksCollectionRef = collection(db, 'todo')
 
@@ -56,14 +40,12 @@ const Main = () => {
         id: nanoid(),
       })
     }
-    setSelectedDate(arr[0])
     arr[0].selected = true
-    setDates([...arr])
 
     const getTasks = async () => {
-      const data = await getDocs(tasksCollectionRef)
+      const dataFromDb = await getDocs(tasksCollectionRef)
       let result = []
-      data.docs.forEach((item) => {
+      dataFromDb.docs.forEach((item) => {
         if (item.data().userId === currentUser.id) {
           result.push({ ...item.data(), id: item.id })
         }
@@ -71,7 +53,7 @@ const Main = () => {
       result.sort((a, b) => {
         return new Date(a.time) - new Date(b.time)
       })
-      setTasks([...result])
+      setData((data) => ({...data, dates: [...arr], selectedDate: arr[0], tasks: [...result]}))
     }
     getTasks()
   }, [])
@@ -79,16 +61,11 @@ const Main = () => {
   return (
     <MainContext.Provider
       value={{
-        dates,
-        setDates,
-        selectedDate,
-        setSelectedDate,
-        tasks,
-        setTasks,
+        data, setData
       }}
     >
       <div className={'main-wrapper'}>
-        {dates.length !== 0 && <DateList dates={dates} setDates={setDates} />}
+        {data.dates.length !== 0 && <DateList />}
         <ToDo />
       </div>
     </MainContext.Provider>
