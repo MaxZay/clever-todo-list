@@ -1,5 +1,5 @@
 import React from 'react'
-import { privateRoutes } from '../utils/routes'
+import { privateRoutes } from '../../utils/routes'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
 const PrivateRouter = () => {

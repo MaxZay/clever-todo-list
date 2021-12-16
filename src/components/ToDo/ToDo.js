@@ -1,7 +1,7 @@
 import React from 'react'
-import '../styles/todo.css'
-import TodoList from './TodoList'
-import CreateTask from './CreateTask'
+import './ToDo.styles.css'
+import TodoList from '../TodoList/TodoList'
+import CreateTask from '../CreateTask/CreateTask'
 
 const ToDo = () => {
   return (

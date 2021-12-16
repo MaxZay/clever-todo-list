@@ -1,18 +1,17 @@
-import './styles/app.css'
+import './App.styles.css'
 import { BrowserRouter } from 'react-router-dom'
-import AppRouter from './components/AppRouter'
+import AppRouter from '../AppRouter/AppRouter'
 import { createContext, useEffect, useState } from 'react'
 
 export const Context = createContext(null)
 
 export const App = () => {
   const [user, setUser] = useState({})
-
   const [darkMode] = useState(false)
 
   useEffect(() => {
     darkMode && (document.body.className = 'dark')
-  }, [])
+  }, [darkMode])
 
   return (
     <Context.Provider

@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react'
-import DateComponent from './Date'
-import '../styles/datelist.css'
-import { MainContext } from './Main'
+import DateComponent from '../Date/Date'
+import './DateList.styles.css'
+import { MainContext } from '../Main/Main'
 import { nanoid } from 'nanoid'
-import { getWeekDay } from '../utils/getWeekDay'
+import { getWeekDay } from '../../utils/getWeekDay'
 
 const DateList = () => {
   const { data, setData } = useContext(MainContext)
-
   const [currentMonth, setCurrentMonth] = useState(1)
 
   const scrollHandler = (event) => {
@@ -33,7 +32,7 @@ const DateList = () => {
         })
       }
 
-      setData((data) => ({...data, dates: data.dates.concat(arr)}))
+      setData((data) => ({ ...data, dates: data.dates.concat(arr) }))
       setCurrentMonth(currentMonth + 1)
     }
   }

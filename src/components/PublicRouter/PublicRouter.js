@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { publicRoutes } from '../utils/routes'
+import { publicRoutes } from '../../utils/routes'
 
 const PublicRouter = () => {
   return (

@@ -1,27 +1,27 @@
 import React, { useContext } from 'react'
-import '../styles/date.css'
-import { MainContext } from './Main'
+import './Date.styles.css'
+import { MainContext } from '../Main/Main'
 
 const DateComponent = ({ selected, day, date, id, dark, light }) => {
   const { data, setData } = useContext(MainContext)
 
-  const clickHandler = () => {
+  const chooseCurrentDateClickHandler = () => {
     let arr = [...data.dates]
-    arr.map((item) => {
+    arr.forEach((item) => {
       if (item.id === id) {
         item.selected = true
-        setData((data) => ({...data, selectedDate: {...item}}))
+        setData((data) => ({ ...data, selectedDate: { ...item } }))
       } else if (item.selected) {
         delete item.selected
       }
       return item
     })
-    setData((data) => ({...data, setData: [...arr]}))
+    setData((data) => ({ ...data, setData: [...arr] }))
   }
 
   return (
     <div className={'date__wrapper'}>
-      <div className={'date-block'} onClick={clickHandler}>
+      <div className={'date-block'} onClick={chooseCurrentDateClickHandler}>
         <div
           className={
             selected ? 'date-block__info-selected' : 'date-block__info'
@@ -46,8 +46,8 @@ const DateComponent = ({ selected, day, date, id, dark, light }) => {
         </div>
       </div>
       <div className={'dots__wrapper'}>
-        {dark && <div className={'dot dot__dark '}></div>}
-        {light && <div className={'dot dot__light'}></div>}
+        {dark && <div className={'dot dot__dark '} />}
+        {light && <div className={'dot dot__light'} />}
       </div>
     </div>
   )

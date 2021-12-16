@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import '../styles/todoTask.css'
-import cross from '../assets/cross.png'
-import edit from '../assets/edit.png'
+import './TodoTask.styles.css'
+import cross from '../../assets/cross.png'
+import edit from '../../assets/edit.png'
 import {
   collection,
   deleteDoc,
@@ -9,27 +9,19 @@ import {
   getDocs,
   updateDoc,
 } from 'firebase/firestore'
-import { db } from '../utils/firebase'
-import { MainContext } from './Main'
-import { Context } from '../App'
+import { db } from '../../utils/firebase'
+import { MainContext } from '../Main/Main'
+import { Context } from '../App/App'
 
 const TodoTask = ({ task, id, status }) => {
   const { data, setData } = useContext(MainContext)
-
   const { user } = useContext(Context)
-
   const [currentUser] = user
-
   const taskDoc = doc(db, 'todo', id)
-
   const [change, setChange] = useState(false)
-
   const [currentTask, setCurrentTask] = useState(task)
-
   const [checked, setChecked] = useState(status === 'done')
-
   const inputEl = useRef(null)
-
   const tasksCollectionRef = collection(db, 'todo')
 
   const changeHandler = (event) => {
@@ -53,7 +45,7 @@ const TodoTask = ({ task, id, status }) => {
   const removeHandler = async () => {
     await deleteDoc(taskDoc)
     const newArr = data.tasks.filter((item) => item.id !== id)
-    setData((data) => ({...data, tasks: [...newArr]}))
+    setData((data) => ({ ...data, tasks: [...newArr] }))
   }
 
   const updateTask = async (newTask) => {
@@ -71,7 +63,7 @@ const TodoTask = ({ task, id, status }) => {
     result.sort((a, b) => {
       return new Date(a.time) - new Date(b.time)
     })
-    setData((data) => ({...data, tasks: [...result]}))
+    setData((data) => ({ ...data, tasks: [...result] }))
   }
 
   const checkHandler = (event) => {

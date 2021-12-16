@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import TodoTask from './TodoTask'
-import { MainContext } from './Main'
-import '../styles/todoList.css'
+import TodoTask from '../ToDoTask/TodoTask'
+import { MainContext } from '../Main/Main'
+import './TodoList.styles.css'
 
 const TodoList = () => {
   const { data } = useContext(MainContext)

@@ -1,0 +1,18 @@
+.navigation_log-out {
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  border-radius: 10px;
+  font-size: 20px;
+  color:  rgb(232,76,61);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.navigation_log-out:hover {
+  transform: scale(1.1);
+}
+
+body.dark .navigation_log-out {
+  color: rgb(88,88,88);
+}

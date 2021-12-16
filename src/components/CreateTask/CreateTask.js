@@ -1,16 +1,15 @@
 import React, { useContext } from 'react'
-import '../styles/createTask.css'
-import { Context } from '../App'
-import { MainContext } from './Main'
+import './CreateTask.styles.css'
+import { Context } from '../App/App'
+import { MainContext } from '../Main/Main'
 import { addDoc, collection, getDocs } from 'firebase/firestore'
-import { db } from '../utils/firebase'
+import { db } from '../../utils/firebase'
 
 const CreateTask = () => {
   const { user } = useContext(Context)
-
   const { data, setData } = useContext(MainContext)
-
   const tasksCollectionRef = collection(db, 'todo')
+  const [currentUser] = user
 
   const createTask = async (object) => {
     await addDoc(tasksCollectionRef, { ...object })
@@ -18,21 +17,27 @@ const CreateTask = () => {
 
   const getTasks = async () => {
     const data = await getDocs(tasksCollectionRef)
-    let result = []
-    data.docs.forEach((item) => {
+    let result = data.docs.reduce((arr, item) => {
       if (item.data().userId === currentUser.id) {
-        result.push({ ...item.data(), id: item.id })
+        arr.push({ ...item.data(), id: item.id })
       }
-    })
-    result.sort((a, b) => {
-      return new Date(a.time) - new Date(b.time)
-    })
-    setData((data) => ({...data, tasks: [...result]}))
+      return arr
+    }, [])
+
+    // result.sort((a, b) => {
+    //   return new Date(a.time) - new Date(b.time)
+    // })
+    setData((data) => ({
+      ...data,
+      tasks: [
+        ...result.sort((a, b) => {
+          return new Date(a.time) - new Date(b.time)
+        }),
+      ],
+    }))
   }
 
-  const [currentUser] = user
-
-  const clickHandler = () => {
+  const addNewTaskButtonClickHandler = () => {
     const sendObject = {
       userId: currentUser.id,
       date: data.selectedDate.date,
@@ -48,7 +53,10 @@ const CreateTask = () => {
   }
 
   return (
-    <button className={'create-task-button'} onClick={clickHandler}>
+    <button
+      className={'create-task-button'}
+      onClick={addNewTaskButtonClickHandler}
+    >
       + Add a new task
     </button>
   )

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
-import DateList from './DateList'
-import '../styles/main.css'
+import DateList from '../DateList/DateList'
+import './Main.styles.css'
 import { nanoid } from 'nanoid'
-import ToDo from './ToDo'
-import { getWeekDay } from '../utils/getWeekDay'
+import ToDo from '../ToDo/ToDo'
+import { getWeekDay } from '../../utils/getWeekDay'
 import { collection, getDocs } from 'firebase/firestore'
-import { db } from '../utils/firebase'
-import { Context } from '../App'
+import { db } from '../../utils/firebase'
+import { Context } from '../App/App'
 
 export const MainContext = React.createContext(null)
 
@@ -14,13 +14,10 @@ const Main = () => {
   const [data, setData] = useState({
     dates: [],
     selectedDate: {},
-    tasks: []
+    tasks: [],
   })
-
   const tasksCollectionRef = collection(db, 'todo')
-
   const { user } = useContext(Context)
-
   const [currentUser] = user
 
   useEffect(() => {
@@ -53,7 +50,12 @@ const Main = () => {
       result.sort((a, b) => {
         return new Date(a.time) - new Date(b.time)
       })
-      setData((data) => ({...data, dates: [...arr], selectedDate: arr[0], tasks: [...result]}))
+      setData((data) => ({
+        ...data,
+        dates: [...arr],
+        selectedDate: arr[0],
+        tasks: [...result],
+      }))
     }
     getTasks()
   }, [])
@@ -61,7 +63,8 @@ const Main = () => {
   return (
     <MainContext.Provider
       value={{
-        data, setData
+        data,
+        setData,
       }}
     >
       <div className={'main-wrapper'}>

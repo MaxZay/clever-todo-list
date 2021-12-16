@@ -1,28 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import '../styles/form.css'
+import '../../shared/form.css'
 import { useFormik } from 'formik'
 import { Link, useHistory } from 'react-router-dom'
-import { validation } from '../utils/validation'
-import { Context } from '../App'
+import { validation } from '../../utils/validation'
+import { Context } from '../App/App'
 import { collection, getDocs } from 'firebase/firestore'
-import { db } from '../utils/firebase'
+import { db } from '../../utils/firebase'
 
 const Login = () => {
   const { user } = useContext(Context)
   const [, setCurrentUser] = user
   const history = useHistory()
-
   const [users, setUsers] = useState([])
-
   const usersCollectionRef = collection(db, 'users')
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef)
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    }
-    getUsers()
-  }, [])
 
   const validate = (values) => {
     const errors = {}
@@ -60,6 +50,14 @@ const Login = () => {
       }
     },
   })
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef)
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+    getUsers()
+  }, [])
 
   return (
     <div className={'form-wrapper'}>

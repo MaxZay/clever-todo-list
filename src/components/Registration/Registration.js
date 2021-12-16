@@ -1,28 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react'
-import '../styles/form.css'
+import '../../shared/form.css'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
-import { validation } from '../utils/validation'
-import { Context } from '../App'
+import { validation } from '../../utils/validation'
+import { Context } from '../App/App'
 import { useHistory } from 'react-router'
 import { nanoid } from 'nanoid'
-import { db } from '../utils/firebase'
+import { db } from '../../utils/firebase'
 import { addDoc, collection, getDocs } from 'firebase/firestore'
 
 const Registration = () => {
   const { user } = useContext(Context)
-
   const [users, setUsers] = useState([])
-
   const [, setCurrentUser] = user
-
   const usersCollectionRef = collection(db, 'users')
+  const history = useHistory()
 
   const createUser = async (user) => {
     await addDoc(usersCollectionRef, { ...user })
   }
-
-  const history = useHistory()
 
   const validate = (values) => {
     let errors = {}
