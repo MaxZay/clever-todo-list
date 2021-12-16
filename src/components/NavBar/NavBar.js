@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import './NavBar.styles.css'
 import { Context } from '../App/App'
-import LogoutButton from '../LogoutButton/LogoutButton'
+import LogoutButton from '../../controls/LogoutButton/LogoutButton'
 
 const NavBar = () => {
   const { user } = useContext(Context)

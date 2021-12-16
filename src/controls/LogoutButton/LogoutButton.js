@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Context } from '../App/App'
+import { Context } from '../../components/App/App'
 import { useHistory } from 'react-router-dom'
 import './LogoutButton.styles.css'
 
