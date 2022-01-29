@@ -1,7 +1,10 @@
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, MAIN_PAGE } from '../consts/routes'
 import Login from '../components/Login/Login'
 import Registration from '../components/Registration/Registration'
 import Main from '../components/Main/Main'
+
+const LOGIN_ROUTE = '/login'
+const REGISTRATION_ROUTE = '/register'
+const MAIN_PAGE = '/main'
 
 export const publicRoutes = [
   {
